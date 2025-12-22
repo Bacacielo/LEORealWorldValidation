@@ -287,23 +287,23 @@ function AppRealWorldValidation_Enhanced()
 		loads = rand(size(pos, 1), 1) * 0.5;
 		
 		% Build graph
-		[~, G] = SimUtils.buildGraphs(pos, vel, loads, P);
+		[~, G] = SimUtils2.buildGraphs(pos, vel, loads, P);
 		
 		% Find entry/exit satellites
-		[u, ~] = SimUtils.findNearest(pos, sPos);
-		[v, ~] = SimUtils.findNearest(pos, dPos);
+		[u, ~] = SimUtils2.findNearest(pos, sPos);
+		[v, ~] = SimUtils2.findNearest(pos, dPos);
 		
 		if ~isempty(u) && ~isempty(v)
 			% Compute K=3 paths (Backup routing)
-			[paths, ~] = SimUtils.getKShortestPaths(G, u, v, 3);
+			[paths, ~] = SimUtils2.getKShortestPaths(G, u, v, 3);
 			
 			% PATH 1: PRIMARY (Red)
 			if length(paths) >= 1
 				p1 = pos(paths{1}, :);
 				set(hPath1, 'XData', p1(:, 1), 'YData', p1(:, 2), 'ZData', p1(:, 3));
 				
-				% Metrics Calculation via SimUtils
-				[lat, ~, fspl, rain_db] = SimUtils.getPathMetrics(paths{1}, pos, vel, AppState.RainRate_mm_h);
+				% Metrics Calculation via SimUtils2
+				[lat, ~, fspl, rain_db] = SimUtils2.getPathMetrics(paths{1}, pos, vel, AppState.RainRate_mm_h);
 				
 				% --- UPLINK DOPPLER CALCULATION ---
                 % Compute the specific Doppler shift seen by the Ground Station
@@ -436,13 +436,13 @@ function AppRealWorldValidation_Enhanced()
 	end
 
 	function C = getCityCoords()
-		% Define static coordinates for simulation cities (ECEF conversion handled by SimUtils)
-		C.London = SimUtils.lla2ecef([51.50, -0.12]);
-		C.NewYork = SimUtils.lla2ecef([40.71, -74.00]);
-		C.Tokyo = SimUtils.lla2ecef([35.67, 139.65]);
-		C.Sydney = SimUtils.lla2ecef([-33.86, 151.20]);
-		C.Athens = SimUtils.lla2ecef([37.98, 23.72]);
-		C.Singapore = SimUtils.lla2ecef([1.35, 103.81]);
+		% Define static coordinates for simulation cities (ECEF conversion handled by SimUtils2)
+		C.London = SimUtils2.lla2ecef([51.50, -0.12]);
+		C.NewYork = SimUtils2.lla2ecef([40.71, -74.00]);
+		C.Tokyo = SimUtils2.lla2ecef([35.67, 139.65]);
+		C.Sydney = SimUtils2.lla2ecef([-33.86, 151.20]);
+		C.Athens = SimUtils2.lla2ecef([37.98, 23.72]);
+		C.Singapore = SimUtils2.lla2ecef([1.35, 103.81]);
 	end
 
 	function showGuide()
